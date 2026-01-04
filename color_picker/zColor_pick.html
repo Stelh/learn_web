@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Roue Couleur + Code Hex</title>
+        <style>
+            body{font-family:sans-serif;background:#222;color:#fff;text-align:center;padding:20px}
+            input[type="text"]{width:100px;font-family:monospace;font-size:18px;padding:8px;background:#333;border:1px solid #555;color:#fff}
+        </style>
+    </head>
+<body>
+<h1>Color Picker</h1>
+<input type="color" id="color" value="#ff0000"><br><br>
+
+<input type="text" id="hex" value="#ff0000" maxlength="9">
+
+<div style="width:250px;height:250px;margin:30px auto;border-radius:50%;box-shadow:0 0 20px #000" id="preview"></div>
+
+<label>Contraste : <input type="range" id="contrast" min="0" max="300" value="100"></label><br><br>
+<label>Opacité : <input type="range" id="opacity" min="0" max="100" value="100"></label>
+
+<script>
+const color = document.getElementById('color');
+const hex = document.getElementById('hex');
+const preview = document.getElementById('preview');
+const contrast = document.getElementById('contrast');
+const opacity = document.getElementById('opacity');
+
+function update() {
+  let c = color.value;
+  if (!c.match(/^#[0-9A-F]{6}$/i)) c = '#ff0000';
+  
+  // Convertir l'opacité (0-100) en hex alpha (00-FF)
+  const alpha = Math.round((opacity.value / 100) * 255).toString(16).padStart(2, '0').toUpperCase();
+  
+  // Format hex avec alpha: #RRGGBBAA
+  hex.value = (c + alpha).toUpperCase();
+  
+  // Appliquer la couleur avec opacité
+  preview.style.background = c;
+  preview.style.filter = `contrast(${contrast.value}%)`;
+  preview.style.opacity = opacity.value / 100;
+}
+
+color.oninput = update;
+contrast.oninput = opacity.oninput = update;
+
+function applyHexColor() {
+  let v = hex.value.trim();
+  
+  // Si pas de #, l'ajouter
+  if (v && !v.startsWith('#')) {
+    v = '#' + v;
+  }
+  
+  // Gérer les formats avec alpha (#RRGGBBAA) ou sans (#RRGGBB)
+  let colorHex = '';
+  let alphaHex = '';
+  
+  if (v.match(/^#[0-9A-F]{8}$/i)) {
+    // Format avec alpha: #RRGGBBAA
+    colorHex = v.substring(0, 7);
+    alphaHex = v.substring(7, 9);
+    // Convertir alpha hex (00-FF) en pourcentage (0-100)
+    const alphaValue = parseInt(alphaHex, 16);
+    opacity.value = Math.round((alphaValue / 255) * 100);
+  } else if (v.match(/^#[0-9A-F]{6}$/i)) {
+    // Format sans alpha: #RRGGBB
+    colorHex = v;
+  } else if (v.match(/^#[0-9A-F]{1,5}$/i)) {
+    // Compléter les couleurs incomplètes (ex: #363 -> #363030)
+    while (v.length < 7) {
+      v += v[v.length - 1];
+    }
+    colorHex = v;
+  }
+  
+  // Appliquer si c'est une couleur hex valide
+  if (colorHex.match(/^#[0-9A-F]{6}$/i)) {
+    color.value = colorHex;
+    update();
+  }
+}
+
+hex.oninput = function() {
+  let v = this.value.trim();
+  // Accepter format avec ou sans alpha
+  if (v.match(/^#[0-9A-F]{6}$/i) || v.match(/^#[0-9A-F]{8}$/i)) {
+    applyHexColor();
+  }
+};
+
+hex.onkeydown = function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    applyHexColor();
+  }
+};
+
+update();
+</script>
+</body>
+</html>

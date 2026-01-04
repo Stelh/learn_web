@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Index</title>
+        <style>
+            html {
+                background-color: #222222;
+                height: 100vh;
+            }
+            body {
+                /*
+                    Le background du bodys'étend sur tout le viewport, même si le body est plus petit.
+                    (comportement hustorique du navigateur)
+                    La border suit la taille réelle du body (son contenu)
+
+                    display:
+                        block       -- haut-bas -> width/height (défaut pour div, p, h1...) -> choicie for box
+                        inline      -- gauche-droite -> not width/height (défaut pour span, a) -> choice for pure text
+                        inline-block-- gauche-droite -> width/height
+                        flex        -- Conteneur flexible (aligne les enfants facilement)
+                        grid        -- Conteneur en grille (lignes + colonnes)
+                        none        -- Masque l'élément complètement
+                        inline-flex -- Flex mais en ligne
+                        inline-grid -- Grid mais en ligne
+                */
+                height: 100vh;
+                align-items: center;
+                justify-content: center;
+                gap: 0px;
+            }
+            .test {
+                background-color: #3b3636;
+                color: #fff;
+                text-align: center;
+                border: 1px solid #2ce5f2e8;
+                padding: 20px;
+                display: block;
+                flex-direction: column;
+                row-gap: 0px;
+                column-gap: 0px;
+                margin-bottom: 5px;
+            }
+            .test2 {
+                background-color: #3b3636;
+                color: #fff;
+                text-align: center;
+                border: 1px solid #2ce5f2e8;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                row-gap: 0px;
+                column-gap: 0px;
+            }
+            h1 {
+                margin: 0px;
+            }
+            h2 {
+                margin: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test">
+            <h1>Pick a color</h1>
+            <h2>Profile_name</h2>
+        </div>
+        <div class="test2">
+            <h1>Pick a color2</h1>
+            <h2>Profile_name2</h2>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,139 @@
+/*
+    :root         → Root element (<html>), used for global variables
+    :hover        → Mouse over
+    :focus        → Element focus (keyboard/click)
+    :active       → Element clicked/activated
+    :visited      → Link already visited
+    :first-child  → First child of a parent
+    :last-child   → Last child of a parent
+    :nth-child(n) → N-th child (ex: :nth-child(2), :nth-child(odd))
+    :not(x)       → All except x (ex: :not(.active))
+    
+    PSEUDO-ELEMENTS (::) - Create a virtual element
+    ::before      → Insert content BEFORE the element (content: "")
+    ::after       → Insert content AFTER the element (content: "")
+    ::first-line  → First line of text
+    ::first-letter→ First letter
+    ::placeholder → Placeholder of an input
+    ::selection   → Text selected by the user
+    
+    EXEMPLE:
+    .btn:hover { background: blue; } → Hover state
+    .btn::before { content: "→ "; } → Add "→ " before the text
+*/
+
+:root {
+    --space-low: 5px;
+    --space-mid: 10px;
+    --space-high: 15px;
+    
+    --color-bg: #222222;
+    --color-text: #ffffff;
+    --color-primary: rgb(0, 255, 255);
+    --color-primary-75: rgba(0, 255, 255, 0.75);
+    --color-primary-50: rgba(0, 255, 255, 0.5);
+    --color-primary-b: rgb(0, 200, 255);
+    
+    --border-width: 1px;
+    --border-style: solid;
+    
+    --gap-default: 10px;
+}
+
+.html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* === PADDING === */
+.p { padding: var(--p, var(--space-low)); }
+.px {
+    padding-left: var(--px, var(--space-low));
+    padding-right: var(--px, var(--space-low));
+}
+.py {
+    padding-top: var(--py, var(--space-low));
+    padding-bottom: var(--py, var(--space-low));
+}
+.pt { padding-top: var(--pt, var(--space-low)); }
+.pb { padding-bottom: var(--pb, var(--space-low)); }
+.pl { padding-left: var(--pl, var(--space-low)); }
+.pr { padding-right: var(--pr, var(--space-low)); }
+
+/* === MARGIN === */
+.m { margin: var(--m, var(--space-low)); }
+.mx { 
+    margin-left: var(--mx, var(--space-low));
+    margin-right: var(--mx, var(--space-low));
+}
+.my { 
+    margin-top: var(--my, var(--space-low));
+    margin-bottom: var(--my, var(--space-low));
+}
+.mt { margin-top: var(--mt, var(--space-low)); }
+.mb { margin-bottom: var(--mb, var(--space-low)); }
+.ml { margin-left: var(--ml, var(--space-low)); }
+.mr { margin-right: var(--mr, var(--space-low)); }
+
+/* === BORDER === */
+.border {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary));
+}
+.border-box {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-75));
+}
+.border-item {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-b));
+}
+
+/* GAP -> Flex / Grid*/
+.gap { gap: var(--gap, var(--gap-default)); }
+.flex-column { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.grid { display: grid; }
+
+/* === LAYOUT === */
+.normalize {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap, var(--gap-default));
+}
+.normalize > * {
+    margin: 0;
+}
+.normalized {
+    align-items: center;
+    gap: var(--gap, var(--gap-default));
+}
+
+/*
+    .force-block = Force display:block sur les enfants directs
+*/
+.force-block > * {
+    display: block;
+}
+
+/* === TEXT === */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* === CENTER === */
+/* Center a block horizontally (requires width) */
+.center-block { margin-left: auto; margin-right: auto; }
+/* Center the children H+V (requires height for V) */
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Center self in a flex parent */
+.center-self { align-self: center; }
+
+/* === LIST === */
+.list-inside { list-style-position: inside; }
+.list-centered {
+    display: inline-block;
+    text-align: left;
+}

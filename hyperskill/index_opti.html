@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="html">
+    <head>
+        <meta charset="UTF-8">
+        <title>index_opti</title>
+        <link rel="stylesheet" href="style_opti.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>PrivaCorp</h1>
+        </header>
+        <nav class="border mb" style="--mb: var(--space-high);">
+            <ul class="list-inside">
+                <li><a href="#block">Block</a></li>
+                <li><a href="#inline">Inline</a></li>
+                <li><a href="#inline-block">Inline-Block</a></li>
+                <li><a href="#priority">Priority</a></li>
+                <li><a href="https://hyperskill.org/join/4920234ca">HyperSkill</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div id="block" class="border normalize">
+            <h1>BLOCK</h1>
+            <header class="border-item">Header</header>
+            <h1 class="border-item">h1, hx..</h1>
+            <div class="border-item">Div</div>
+            <div class="border-item">
+                <p>UL Basic</p>
+                <ul>
+                    <li>Item 1
+                        <ul>
+                            <li>Sub Item 1
+                                <ul>
+                                    <li>Sub Sub Item 1</li>
+                                </ul>
+                            </li>
+                            <li>Sub Item 2</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="border-item list-inside">
+                <p>UL list-inside</p>
+                <ul>
+                    <li>Item 1
+                        <ul>
+                            <li>Sub Item 1
+                                <ul>
+                                    <li>Sub Sub Item 1</li>
+                                </ul>
+                            </li>
+                            <li>Sub Item 2</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="list-centered border-item">
+                <p class="px">UL Centered (inline-block, not working in flex)</p>
+                <ul>
+                    <li>Item 1
+                        <ul>
+                            <li>Sub Item 1
+                                <ul>
+                                    <li>Sub Sub Item 1</li>
+                                </ul>
+                            </li>
+                            <li>Sub Item 2</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="border-item center-self text-left">
+                <p class="px">UL Center-Self (flex context)</p>
+                <ul>
+                    <li>Item 1
+                        <ul>
+                            <li>Sub Item 1
+                                <ul>
+                                    <li>Sub Sub Item 1</li>
+                                </ul>
+                            </li>
+                            <li>Sub Item 2</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <p class="border-item">P</p>
+            <form class="border-item">Form</form>
+            <footer class="border-item">Footer</footer>
+        </div>
+        
+        <div id="inline" class="border mb px py text-center normalize" style="--px: var(--space-mid); --py: var(--space-mid);">
+            <h1>INLINE</h1>
+            <p class="border-item"><a class="border-item" href="#inline">a href</a></p>
+            <b class="border-item">b</b>
+            <strong class="border-item">strong</strong>
+            <em class="border-item">em</em>
+            <span class="border-item">span</span>
+            <p class="border-item">h<sub>2</sub>o - sub</p>
+            <p class="border-item">x<sup>2</sup> - sup</p>
+            <label class="border-item">label</label>
+            <p class="border-item">br (void, no content)</p><br>
+        </div>
+
+        <div id="inline-block" class="normalize border mb px py text-center" style="--px: var(--space-mid); --py: var(--space-mid);">
+            <h1>INLINE-BLOCK</h1>
+            <button>Button</button>
+            <input class="text-center" type="text" placeholder="Enter text">
+            <audio controls audio loop autoplay muted src="audio/arcade.wav"></audio>
+            <audio controls class="border-item">
+                <source src="audio/sweep.wav" type="audio/wav">
+                <source src="audio/sweep.mp3" type="audio/mpeg">
+                <source src="audio/sweep.ogg" type="audio/ogg">
+            </audio>
+        </div>
+        <div id="priority" class="border mb px py text-center normalize" style="--px: var(--space-mid); --py: var(--space-mid);">
+            <h1>Class/ID Priority</h1>
+            <ul class="border-item center-self text-left">
+                <li>inline style > 1000</li>
+                <li>#id > 100</li>
+                <li>.class > 10</li>
+                <li>element > 1</li>
+            </ul>
+        </div>
+        <div id="form" class="border mb px py text-center normalize" style="--px: var(--space-mid); --py: var(--space-mid);">
+            <h1>Form</h1>
+            <div class="border-item">
+                <!-- method get: is default if not specified-->
+                <form action="[value]" method="[value]">
+                    <p>First Name:</p>
+                    <input type="text" name="firstName">
+                    <!-- default width text field is 20 char -->
+                    <p>Last Name:</p>
+                    <input type="text" name="lastName">
+                    <p>Password:</p>
+                    <input type="password" name="password">
+                    <div class="border-item m" style="--m: var(--space-mid);">
+                        <!-- label: to select the radio with click on neearby element -->
+                        <label><input type="radio" name="language" value="english"> English</label>
+                        <input type="radio" name="language" value="french"> Français
+                        <!-- label for: to select the radio regardless of its location -->
+                        <input id="spanish" type="radio" name="language" value="spanish">
+                        <label for="spanish">Spanish</label>
+                    </div>
+                    <div class="checkbox_technique">
+                        <input type="checkbox" name="technique" value="computer"> I have a computer<br>
+                        <input type="checkbox" name="technique" value="phone"> I have a phone
+                        <!-- OPTI: Ajouter <label> pour rendre le texte cliquable (UX/Accessibilité) -->
+                        <!-- OPTI: Remplacer <br> par du CSS (margin/display:block) - <br> = retour ligne texte, pas layout -->
+                        <!--
+                        <label><input type="checkbox" name="technique" value="computer"> I have a computer</label>
+                        <label><input type="checkbox" name="technique" value="phone"> I have a phone</label>
+                        -->
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <footer>
+            By Stelh
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="html">
+    <head>
+        <meta charset="UTF-8">
+        <title>index</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <h1>PrivaCorp</h1>
+        </header>
+        <!-- OPTI: Use <nav> instead of <div> for semantic/SEO/accessibility -->
+        <!-- OPTI: The div wrapper is useless, the class can go on <ul> or <nav> directly -->
+        <nav class="nav_border margin_bot-high">
+            <ul class="list_inside">
+                <li><a href="#block">Block</a></li>
+                <li><a href="#color_picker">Color Picker</a></li>
+                <li><a href="https://hyperskill.org/join/4920234ca">HyperSkill</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div id="block" class="box_border pad_left-high pad_right-high center-text normalized_margin normalized_gap">
+            <h1 class="item_border">=== BLOCK ===</h1>
+            <header class="item_border">Header</header>
+            <h1 class="item_border">H1,H2,Hx</h1>
+            <div class="item_border">Div</div>
+            <ul class="item_border">
+                <li>Item 1
+                    <ul>
+                        <li>Sub Item 1
+                            <ul>
+                                <li>Sub Sub Item 1</li>
+                            </ul>
+                        </li>
+                        <li>Sub Item 2</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list_inside item_border">
+                <li>Item 1
+                    <ul>
+                        <li>Sub Item 1
+                            <ul>
+                                <li>Sub Sub Item 1</li>
+                            </ul>
+                        </li>
+                        <li>Sub Item 2</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list_centered border item_border">
+                <li>Item 1
+                    <ul>
+                        <li>Sub Item 1
+                            <ul>
+                                <li>Sub Sub Item 1</li>
+                            </ul>
+                        </li>
+                        <li>Sub Item 2</li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="item_border">P</p>
+            <form class="item_border">Form</form>
+            <footer class="item_border">Footer</footer>
+        </div>
+        
+        <div id="inline" class="content">
+            <h1>=== INLINE ===</h1>
+            <p><a href="#">a href</a></p>
+            <b>9. B is Inline</b>
+            <strong>10. Strong is Inline</strong>
+            <em>11. Em is Inline</em>
+            <span>12. Span is Inline</span>
+            <span class="span_border">12b. Span avec classe O(1)</span>
+            <p>13. H<sub>2</sub>O - SUB is Inline</p>
+            <p>14. x<sup>2</sup> - SUP is Inline</p>
+            <label>15. Label is Inline</label>
+            <br><!-- 16. BR is Inline (retour ligne) -->
+        </div>
+        <div id="inline-block" class="content">
+            <h1>=== INLINE-BLOCK ===</h1>
+            <button>17. Button is Inline-Block</button>
+            <input type="text" placeholder="18. Input is Inline-Block">
+            <audio controls>19. Audio is Inline-Block</audio>
+            
+            <!-- === VOID ELEMENTS (pas de balise fermante) === -->
+            <!-- img, input, br, hr, meta, link = void aussi mais déjà vus -->
+            <audio controls>
+                <source src="audio/sweep.mp3" type="audio/mpeg">
+                20. Source is Void (fournit le média au parent)
+            </audio>
+        </div>
+        
+        <audio src="audio/arcade.wav" controls loop autoplay muted></audio>
+        <!-- OPTI: autoplay sans muted est bloqué par les navigateurs. Ici muted est présent donc OK -->
+        <!-- Note: Pour autoplay avec son, il faut une interaction user au préalable -->
+        <audio controls>
+            <source src="audio/sweep.wav" type="audio/wav">
+            <source src="audio/sweep.mp3" type="audio/mpeg">
+            <source src="audio/sweep.ogg" type="audio/ogg">
+        </audio>
+        
+        <p id="id_test">id: Unique / PK O(1) / Hash / Sensitive</p>
+        <p class="class_test1 class_test2">class: Multiple</p>
+        <div class="card">Card 1 "class card"</div>
+        <div class="card">Card 2 "class card"</div>
+        
+        <p>Class/ID Priority</p>
+        <ul>
+            <li>inline style > 1000</li>
+            <li>#id > 100</li>
+            <li>.class > 10</li>
+            <li>element > 1</li>
+        </ul>
+        <!-- method get: is default if not specified-->
+        <form action="[value]" method="[value]">
+            <p>First Name:</p>
+            <input type="text" name="firstName">
+            <!-- default width text field is 20 char -->
+            <p>Last Name:</p>
+            <input type="text" name="lastName">
+            <p>Password:</p>
+            <input type="password" name="password">
+            <div class="radio_language">
+                <!-- label: to select the radio with click on neearby element -->
+                <label><input type="radio" name="language" value="english"> English</label>
+                <input type="radio" name="language" value="french"> Français
+                <!-- label for: to select the radio regardless of its location -->
+                <input id="spanish" type="radio" name="language" value="spanish">
+                <label for="spanish">Spanish</label>
+            </div>
+            <div class="checkbox_technique">
+                <input type="checkbox" name="technique" value="computer"> I have a computer<br>
+                <input type="checkbox" name="technique" value="phone"> I have a phone
+                <!-- OPTI: Ajouter <label> pour rendre le texte cliquable (UX/Accessibilité) -->
+                <!-- OPTI: Remplacer <br> par du CSS (margin/display:block) - <br> = retour ligne texte, pas layout -->
+                <!--
+                <label><input type="checkbox" name="technique" value="computer"> I have a computer</label>
+                <label><input type="checkbox" name="technique" value="phone"> I have a phone</label>
+                -->
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <footer>
+            By Stelh
+        </footer>
+    </body>
+</html>
