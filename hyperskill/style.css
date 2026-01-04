@@ -1,136 +1,139 @@
-    /*  Selector = O(n)
-        Class = O(1)
-        Prefer class for performance O(1)
-    */
-    .html {
-        background-color: #222222;
-        color: #ffffff;
-    }
+/*
+    :root         → Root element (<html>), used for global variables
+    :hover        → Mouse over
+    :focus        → Element focus (keyboard/click)
+    :active       → Element clicked/activated
+    :visited      → Link already visited
+    :first-child  → First child of a parent
+    :last-child   → Last child of a parent
+    :nth-child(n) → N-th child (ex: :nth-child(2), :nth-child(odd))
+    :not(x)       → All except x (ex: :not(.active))
+    
+    PSEUDO-ELEMENTS (::) - Create a virtual element
+    ::before      → Insert content BEFORE the element (content: "")
+    ::after       → Insert content AFTER the element (content: "")
+    ::first-line  → First line of text
+    ::first-letter→ First letter
+    ::placeholder → Placeholder of an input
+    ::selection   → Text selected by the user
+    
+    EXEMPLE:
+    .btn:hover { background: blue; } → Hover state
+    .btn::before { content: "→ "; } → Add "→ " before the text
+*/
 
-    /*
-        Center TEXT (inline)
-        Usage : <p class="center-text">Text</p>
-    */
-    .center-text  { text-align: center; }
-    /*
-        Center a BLOCK horizontally
-        REQUIRES a width (otherwise takes 100%, nothing to center)
-        Usage : <div class="center-block" style="width: 50%;">
-    */
-    .center-block { margin-left: auto; margin-right: auto; }
-    /*
-        Center the CHILDREN (horizontal + vertical)
-        REQUIERT height (otherwise height = content, nothing to center)
-        Usage : <div class="center-flex" style="height: 100px;">
-    */
-    .center-flex  { display: flex; justify-content: center; align-items: center; }
+:root {
+    --space-low: 5px;
+    --space-mid: 10px;
+    --space-high: 15px;
+    
+    --color-bg: #222222;
+    --color-text: #ffffff;
+    --color-primary: rgb(0, 255, 255);
+    --color-primary-75: rgba(0, 255, 255, 0.75);
+    --color-primary-50: rgba(0, 255, 255, 0.5);
+    --color-primary-b: rgb(0, 200, 255);
+    
+    --border-width: 1px;
+    --border-style: solid;
+    
+    --gap-default: 10px;
+}
 
-    .list_inside {
-        list-style-position: inside;
-    }
-    .list_centered {
-        display: inline-block;  /* Prend seulement sa largeur */
-        text-align: left;       /* Garde l'alignement gauche DANS la liste */
-    }
+.html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
 
-    /* Reset margin for all direct children */
-    .normalized_margin > * {
-        margin: 0;
-    }
-    .normalized_gap {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    /* Reset margin for all children */
-    .Normalized_Margin * {
-        margin: 0;
-    }
+/* === PADDING === */
+.p { padding: var(--p, var(--space-low)); }
+.px {
+    padding-left: var(--px, var(--space-low));
+    padding-right: var(--px, var(--space-low));
+}
+.py {
+    padding-top: var(--py, var(--space-low));
+    padding-bottom: var(--py, var(--space-low));
+}
+.pt { padding-top: var(--pt, var(--space-low)); }
+.pb { padding-bottom: var(--pb, var(--space-low)); }
+.pl { padding-left: var(--pl, var(--space-low)); }
+.pr { padding-right: var(--pr, var(--space-low)); }
 
-    .nav_border {
-        border: 1px solid rgb(0, 255, 255);
-    }
-    .box_border {
-        border: 1px solid rgba(0, 255, 255, 0.75);
-    }
-    .item_border {
-        border: 1px solid rgba(0, 200, 255, 0.75);
-    }
+/* === MARGIN === */
+.m { margin: var(--m, var(--space-low)); }
+.mx { 
+    margin-left: var(--mx, var(--space-low));
+    margin-right: var(--mx, var(--space-low));
+}
+.my { 
+    margin-top: var(--my, var(--space-low));
+    margin-bottom: var(--my, var(--space-low));
+}
+.mt { margin-top: var(--mt, var(--space-low)); }
+.mb { margin-bottom: var(--mb, var(--space-low)); }
+.ml { margin-left: var(--ml, var(--space-low)); }
+.mr { margin-right: var(--mr, var(--space-low)); }
 
-    .content {
-        display: block;
-    }
+/* === BORDER === */
+.border {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary));
+}
+.border-box {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-75));
+}
+.border-item {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-b));
+}
 
-    .span_border {
-        border: 1px solid blue;
-    }
+/* GAP -> Flex / Grid*/
+.gap { gap: var(--gap, var(--gap-default)); }
+.flex-column { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.grid { display: grid; }
 
+/* === LAYOUT === */
+.normalize {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap, var(--gap-default));
+}
+.normalize > * {
+    margin: 0;
+}
+.normalized {
+    align-items: center;
+    gap: var(--gap, var(--gap-default));
+}
 
-    /*
-        MARGIN vs GAP :
-        ┌─────────────────────────────────────────────────────────────────┐
-        │ MARGIN (.margin_top, .margin_bot...)                              │
-        │ - Extérieur                                                     │
-        │ - Universel : fonctionne sur TOUT élément                       │
-        │ - Usage : <div class="margin_bot">                               │
-        │ - Inconvénient : margin sur le dernier élément = espace inutile │
-        ├─────────────────────────────────────────────────────────────────┤
-        │ GAP (.gap-sm, .gap-mid...)                                       │
-        │ - Intérieur                                                     │
-        │ - Limité : SEULEMENT sur display: flex ou grid                  │
-        │ - Usage : <div class="gap-mid" style="display:flex">             │
-        │ - Avantage : espace uniquement ENTRE enfants (pas après dernier)│
-        └─────────────────────────────────────────────────────────────────┘
-        REGLE : Utiliser margin pour utility universelle
-                Utiliser gap pour les conteneurs flex/grid
-    */
-    /* Margin */
-    .margin_top-low    { margin-top: 5px; }
-    .margin_top-mid    { margin-top: 10px; }
-    .margin_top-high    { margin-top: 15px; }
+/*
+    .force-block = Force display:block sur les enfants directs
+*/
+.force-block > * {
+    display: block;
+}
 
-    .margin_bot-low    { margin-bottom: 5px; }
-    .margin_bot-mid    { margin-bottom: 10px; }
-    .margin_bot-high    { margin-bottom: 15px; }
+/* === TEXT === */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-    .margin_left-low   { margin-left: 5px; }
-    .margin_left-mid   { margin-left: 10px; }
-    .margin_left-high   { margin-left: 15px; }
+/* === CENTER === */
+/* Center a block horizontally (requires width) */
+.center-block { margin-left: auto; margin-right: auto; }
+/* Center the children H+V (requires height for V) */
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Center self in a flex parent */
+.center-self { align-self: center; }
 
-    .margin_right-low  { margin-right: 5px; }
-    .margin_right-mid  { margin-right: 10px; }
-    .margin_right-high  { margin-right: 15px; }
-
-    /* Gap */
-    .gap-low { gap: 5px; }
-    .gap-mid { gap: 10px; }
-    .gap-high { gap: 15px; }
-
-    /* Padding - directions individuelles */
-    .pad_left-low   { padding-left: 5px; }
-    .pad_left-mid   { padding-left: 10px; }
-    .pad_left-high  { padding-left: 15px; }
-    .pad_right-low   { padding-right: 5px; }
-    .pad_right-mid   { padding-right: 10px; }
-    .pad_right-high  { padding-right: 15px; }
-    .pad_top-low    { padding-top: 5px; }
-    .pad_top-mid    { padding-top: 10px; }
-    .pad_top-high   { padding-top: 15px; }
-    .pad_bot-low    { padding-bottom: 5px; }
-    .pad_bot-mid    { padding-bottom: 10px; }
-    .pad_bot-high   { padding-bottom: 15px; }
-
-    /* Padding - normalisé (plusieurs côtés) */
-    /* 4 côtés */
-    .pad-low  { padding: 5px; }
-    .pad-mid  { padding: 10px; }
-    .pad-high { padding: 15px; }
-    /* Horizontal (gauche + droite) */
-    .pad-x-low  { padding-left: 5px; padding-right: 5px; }
-    .pad-x-mid  { padding-left: 10px; padding-right: 10px; }
-    .pad-x-high { padding-left: 15px; padding-right: 15px; }
-    /* Vertical (haut + bas) */
-    .pad-y-low  { padding-top: 5px; padding-bottom: 5px; }
-    .pad-y-mid  { padding-top: 10px; padding-bottom: 10px; }
-    .pad-y-high { padding-top: 15px; padding-bottom: 15px; }
-
+/* === LIST === */
+.list-inside { list-style-position: inside; }
+.list-centered {
+    display: inline-block;
+    text-align: left;
+}
