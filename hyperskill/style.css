@@ -6,8 +6,8 @@
     :visited      → Link already visited
     :first-child  → First child of a parent
     :last-child   → Last child of a parent
-    :nth-child(n) → N-th child (ex: :nth-child(2), :nth-child(odd))
-    :not(x)       → All except x (ex: :not(.active))
+    :nth-child(n) → N-th child (ex -> :nth-child(2), :nth-child(odd))
+    :not(x)       → All except x (ex -> :not(.active))
     
     PSEUDO-ELEMENTS (::) - Create a virtual element
     ::before      → Insert content BEFORE the element (content: "")
@@ -17,16 +17,12 @@
     ::placeholder → Placeholder of an input
     ::selection   → Text selected by the user
     
-    EXEMPLE:
+    EXAMPLE:
     .btn:hover { background: blue; } → Hover state
     .btn::before { content: "→ "; } → Add "→ " before the text
 */
 
 :root {
-    --space-low: 5px;
-    --space-mid: 10px;
-    --space-high: 15px;
-    
     --color-bg: #222222;
     --color-text: #ffffff;
     --color-primary: rgb(0, 255, 255);
@@ -34,10 +30,16 @@
     --color-primary-50: rgba(0, 255, 255, 0.5);
     --color-primary-b: rgb(0, 200, 255);
     
+    --space-low: 5px;
+    --space-mid: 10px;
+    --space-high: 15px;
+    
+    --gap-low: 5px;
+    --gap-mid: 10px;
+    --gap-high: 15px;
+    
     --border-width: 1px;
     --border-style: solid;
-    
-    --gap-default: 10px;
 }
 
 .html {
@@ -75,19 +77,9 @@
 .ml { margin-left: var(--ml, var(--space-low)); }
 .mr { margin-right: var(--mr, var(--space-low)); }
 
-/* === BORDER === */
-.border {
-    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary));
-}
-.border-box {
-    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-75));
-}
-.border-item {
-    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-b));
-}
-
-/* GAP -> Flex / Grid*/
-.gap { gap: var(--gap, var(--gap-default)); }
+/* === GAP === 
+-> Flex / Grid */
+.gap { gap: var(--gap, var(--gap-low)); }
 .flex-column { display: flex; flex-direction: column; }
 .flex-row { display: flex; flex-direction: row; }
 .grid { display: grid; }
@@ -97,18 +89,366 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--gap, var(--gap-default));
+    gap: var(--gap, var(--gap-low));
 }
+
+.flex-example {
+    display: flex;
+    /* -- PARENT (container) --*/
+    flex-direction: column;    /* Main axis direction (horizontal if row, vertical if column) */
+    /*
+        row             → left to right (default)
+        row-reverse     → right to left
+        column          → top to bottom
+        column-reverse  → bottom to top
+        
+        row (default):          row-reverse:
+        ┌─────────────┐         ┌─────────────┐
+        │ [1] [2] [3] →         │ ← [3] [2] [1]
+        └─────────────┘         └─────────────┘
+        
+        column:                 column-reverse:
+        ┌─────┐                 ┌─────┐
+        │ [1] │ ↓               │ [3] │ ↑
+        │ [2] │                 │ [2] │
+        │ [3] │                 │ [1] │
+        └─────┘                 └─────┘
+    */
+    flex-wrap: nowrap;    /* Return to next line */
+    /*
+        nowrap          → all on 1 line, overflow if needed (default)
+        wrap            → return to next line
+        wrap-reverse    → return to next line upward
+        
+        nowrap (default):
+        ┌──────────────────────┐
+        │ [1] [2] [3] [4] [5] [6] →→→ overflow
+        └──────────────────────┘
+        
+        wrap:
+        ┌──────────────────────┐
+        │ [1] [2] [3] [4]      │
+        │ [5] [6]              │ ↓
+        └──────────────────────┘
+        
+        wrap-reverse:
+        ┌──────────────────────┐
+        │ [5] [6]              │ ↑
+        │ [1] [2] [3] [4]      │
+        └──────────────────────┘
+    */
+    justify-content: flex-start;    /* Align on main axis (horizontal if row, vertical if column)*/
+    /*
+        flex-start      → aligned to start
+        flex-end        → aligned to end
+        center          → centered
+        space-between   → spaced, stuck to edges
+        space-around    → spaced, margin at edges
+        space-evenly    → perfectly equal spacing
+        
+        flex-start (default):
+        ┌─────────────────────────┐
+        │ [1] [2] [3]             │
+        └─────────────────────────┘
+        
+        flex-end:
+        ┌─────────────────────────┐
+        │             [1] [2] [3] │
+        └─────────────────────────┘
+        
+        center:
+        ┌─────────────────────────┐
+        │       [1] [2] [3]       │
+        └─────────────────────────┘
+        
+        space-between:
+        ┌─────────────────────────┐
+        │ [1]       [2]       [3] │
+        └─────────────────────────┘
+        
+        space-around:
+        ┌─────────────────────────┐
+        │   [1]     [2]     [3]   │
+        └─────────────────────────┘
+        
+        space-evenly:
+        ┌─────────────────────────┐
+        │    [1]    [2]    [3]    │
+        └─────────────────────────┘
+    */
+    align-items: stretch;    /* Align on cross axis (vertical if row, horizontal if column) */
+    /*
+        flex-start  → aligned to start
+        flex-end    → aligned to end
+        center      → centered
+        stretch     → stretch to fill (default)
+        baseline    → aligned to text baseline
+        
+        flex-start:
+        ┌─────────────────────────┐
+        │ [1] [2] [3]             │
+        │                         │
+        │                         │
+        └─────────────────────────┘
+        
+        flex-end:
+        ┌─────────────────────────┐
+        │                         │
+        │                         │
+        │ [1] [2] [3]             │
+        └─────────────────────────┘
+        
+        center:
+        ┌─────────────────────────┐
+        │                         │
+        │ [1] [2] [3]             │
+        │                         │
+        └─────────────────────────┘
+        
+        stretch (default):
+        ┌─────────────────────────┐
+        │ [   ] [   ] [   ]       │
+        │ [ 1 ] [ 2 ] [ 3 ]       │
+        │ [   ] [   ] [   ]       │
+        └─────────────────────────┘
+        
+        baseline:
+        ┌─────────────────────────┐
+        │ [Aaa] [Bbb] [Ccc]       │  ← aligned on text line
+        │                         │
+        └─────────────────────────┘
+    */
+    align-content: stretch;    /* Align rows when wrap (only if multiple lines) */
+    /*
+        === ONLY WORKS WHEN flex-wrap: wrap IS ENABLED ===
+        
+        flex-start      → rows packed to start
+        flex-end        → rows packed to end
+        center          → rows centered
+        stretch         → rows stretch to fill (default)
+        space-between   → rows spaced, stuck to edges
+        space-around    → rows spaced, margin at edges
+        
+        flex-start:
+        ┌─────────────────────────┐
+        │ [1] [2] [3] [4]         │
+        │ [5] [6]                 │
+        │                         │
+        │                         │
+        └─────────────────────────┘
+        
+        flex-end:
+        ┌─────────────────────────┐
+        │                         │
+        │                         │
+        │ [1] [2] [3] [4]         │
+        │ [5] [6]                 │
+        └─────────────────────────┘
+        
+        center:
+        ┌─────────────────────────┐
+        │                         │
+        │ [1] [2] [3] [4]         │
+        │ [5] [6]                 │
+        │                         │
+        └─────────────────────────┘
+        
+        stretch (default):
+        ┌─────────────────────────┐
+        │ [  1  ] [  2  ] [  3  ] │
+        │ [  4  ] [  5  ] [  6  ] │
+        └─────────────────────────┘
+        
+        space-between:
+        ┌─────────────────────────┐
+        │ [1] [2] [3] [4]         │
+        │                         │
+        │                         │
+        │ [5] [6]                 │
+        └─────────────────────────┘
+        
+        space-around:
+        ┌─────────────────────────┐
+        │                         │
+        │ [1] [2] [3] [4]         │
+        │                         │
+        │ [5] [6]                 │
+        │                         │
+        └─────────────────────────┘
+    */
+    gap: 10px;    /* space between children (row-gap + column-gap) */
+    row-gap: 10px;    /* vertical space (between rows) */
+    /*
+        row-gap (visible with wrap or grid):
+        ┌─────────────────────────┐
+        │ [1]  [2]  [3]  [4]      │
+        │         ↕ gap           │
+        │ [5]  [6]                │
+        └─────────────────────────┘
+    */
+    column-gap: 10px;    /* horizontal space (between columns) */
+    /*
+        column-gap:
+        ┌─────────────────────────┐
+        │ [1] ←gap→ [2] ←gap→ [3] │
+        └─────────────────────────┘
+    */
+    }
+
+.flex-child {
+    /*-- ENFANT (items) --*/
+    order: 0;    /* display order (default: 0) */
+    /*
+        - Default: 0
+        - Lower value = displayed first
+        - Accepts negative values
+        
+        HTML: [A] [B] [C]
+        
+        order default (all 0):
+        ┌─────────────────────────┐
+        │ [A] [B] [C]             │
+        └─────────────────────────┘
+        
+        A: order: 2, B: order: 0, C: order: 1
+        ┌─────────────────────────┐
+        │ [B] [C] [A]             │
+        └─────────────────────────┘
+        
+        A: order: -1 (negative = before others)
+        ┌─────────────────────────┐
+        │ [A] [B] [C]             │
+        └─────────────────────────┘
+    */
+    flex-grow: 0;    /* take remaining space (0 = no, 1+ = yes) */
+    /*
+        - 0 = don't grow (default)
+        - 1+ = take remaining space
+        - Value = proportion of space
+        
+        All flex-grow: 0 (default):
+        ┌─────────────────────────────────┐
+        │ [1] [2] [3]        (empty space)│
+        └─────────────────────────────────┘
+        
+        [2] flex-grow: 1:
+        ┌─────────────────────────────────┐
+        │ [1] [━━━━━━━ 2 ━━━━━━━] [3]    │
+        └─────────────────────────────────┘
+        
+        All flex-grow: 1 (share space):
+        ┌─────────────────────────────────┐
+        │ [━━ 1 ━━] [━━ 2 ━━] [━━ 3 ━━]  │
+        └─────────────────────────────────┘
+        
+        [1]: 1, [2]: 2, [3]: 1 (proportional):
+        ┌─────────────────────────────────┐
+        │ [━ 1 ━] [━━━━ 2 ━━━━] [━ 3 ━]  │
+        └─────────────────────────────────┘
+    */
+    flex-shrink: 1;    /* shrink if not enough space (0 = no) */
+    /*
+        - 1 = can shrink (default)
+        - 0 = never shrink
+        - Higher value = shrinks more
+        
+        Container too small, all flex-shrink: 1 (default):
+        ┌───────────────────┐
+        │ [1] [2] [3]       │  ← all shrink proportionally
+        └───────────────────┘
+        
+        [2] flex-shrink: 0 (doesn't shrink):
+        ┌───────────────────┐
+        │ [1] [━━ 2 ━━] [3] │  ← [2] keeps size, [1] and [3] shrink
+        └───────────────────┘
+        
+        [1]: 2, [2]: 1, [3]: 1 (proportional):
+        ┌───────────────────┐
+        │ [1] [─2─] [─3─]   │  ← [1] shrinks 2x more
+        └───────────────────┘
+    */
+    flex-basis: auto;    /* base size (auto | px | % | 0) */
+    /*
+        - auto = use width or content (default)
+        - 0 = ignore content, start from 0
+        - px / % / rem = fixed size
+        
+        flex-basis: auto (default) → uses width/content:
+        ┌─────────────────────────────────┐
+        │ [Hello] [World!!!!] [Hi]        │  ← size = content
+        └─────────────────────────────────┘
+        
+        flex-basis: 100px (all):
+        ┌─────────────────────────────────┐
+        │ [━100px━] [━100px━] [━100px━]   │
+        └─────────────────────────────────┘
+        
+        flex-basis: 0 + flex-grow: 1 (all):
+        ┌─────────────────────────────────┐
+        │ [━━ 1 ━━] [━━ 2 ━━] [━━ 3 ━━]   │  ← equal size, ignores content
+        └─────────────────────────────────┘
+    */
+    flex: 0 1 auto;    /* shorthand: grow shrink basis */
+    /*
+        flex: [grow] [shrink] [basis]
+        
+        flex: 0 1 auto;    → grow:0, shrink:1, basis:auto (DEFAULT)
+        flex: 1;           → grow:1, shrink:1, basis:0
+        flex: auto;        → grow:1, shrink:1, basis:auto
+        flex: none;        → grow:0, shrink:0, basis:auto (fixed, never moves)
+        
+        Common examples:
+        ┌───────────────────────────────────┐
+        │ flex: 1         → takes all available space
+        │ flex: none      → fixed size, never changes
+        │ flex: 0 0 200px → fixed at 200px
+        │ flex: 2         → takes 2x more than flex: 1
+        └───────────────────────────────────┘
+        
+        Recommended way to use grow/shrink/basis
+    */
+    align-self: auto;    /* auto | flex-start | flex-end | center | stretch | baseline */
+    /*
+        Override align-items for ONE child only
+        - auto = follows parent's align-items (default)
+        - Same values as align-items
+        
+        Parent: align-items: flex-start
+        
+        [2] with align-self: flex-end:
+        ┌─────────────────────────────────┐
+        │ [1]             [3]             │
+        │                                 │
+        │       [2]                       │  ← [2] at bottom, others at top
+        └─────────────────────────────────┘
+        
+        [2] with align-self: center:
+        ┌─────────────────────────────────┐
+        │ [1]             [3]             │
+        │       [2]                       │  ← [2] centered vertically
+        │                                 │
+        └─────────────────────────────────┘
+        
+        [2] with align-self: stretch:
+        ┌─────────────────────────────────┐
+        │ [1] [   2   ]   [3]             │
+        │     [   2   ]                   │  ← [2] stretches
+        │     [   2   ]                   │
+        └─────────────────────────────────┘
+    */
+}
+
 .normalize > * {
     margin: 0;
 }
 .normalized {
     align-items: center;
-    gap: var(--gap, var(--gap-default));
+    gap: var(--gap, var(--gap-low));
 }
 
 /*
-    .force-block = Force display:block sur les enfants directs
+    .force-block
+    -> Force display: block on all direct children
 */
 .force-block > * {
     display: block;
@@ -136,4 +476,19 @@
 .list-centered {
     display: inline-block;
     text-align: left;
+}
+
+
+
+
+
+/* === BORDER === */
+.border {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary));
+}
+.border-box {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-75));
+}
+.border-item {
+    border: var(--border-width) var(--border-style) var(--border-color, var(--color-primary-b));
 }
